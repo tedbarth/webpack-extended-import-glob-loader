@@ -65,6 +65,27 @@ describe('loader', function() {
           'import * as modules0 from "./modules/a.js"; import * as modules1 from "./modules/b.js"; import * as modules2 from "./modules/c.js"; var modules = [modules0, modules1, modules2];'
         );
       });
+    });
+
+    describe('import from *.scss', function() {
+      it('should import glob scss files', function() {
+        var generatedCode = loader.call(context, '@import "./modules/*.scss";');
+        expect(generatedCode).to.equal(
+          '@import "./modules/e.scss"; @import "./modules/f.scss";'
+        );
+      });
+
+      it('should honor comment after expanding glob import files', function() {
+        var generatedCode = loader.call(context, '//@import "./modules/*.scss";');
+        expect(generatedCode).to.equal(
+          '//@import "./modules/e.scss"; @import "./modules/f.scss";'
+        );
+
+        generatedCode = loader.call(context, '// @import "./modules/*.scss";');
+        expect(generatedCode).to.equal(
+          '// @import "./modules/e.scss"; @import "./modules/f.scss";'
+        );
+      });
     })
   });
 

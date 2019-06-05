@@ -59,7 +59,7 @@ Expands into
 
 ## Install
 ```sh
-npm install import-glob-loader --save-dev
+npm install webpack-import-glob-loader --save-dev
 ```
 
 ## Usage

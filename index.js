@@ -59,28 +59,28 @@ module.exports = function (source) {
         const fileName = quote + prefix + file + quote;
 
         if (match.match(importSass)) {
-          return '@import ' + fileName;
+          return `@import ${fileName}`;
 
         } else if (match.match(importModules)) {
           const moduleName = obj + index;
-          modules.push('{fileName: ' + fileName + ', module: ' + moduleName + '}');
-          return 'import * as ' + moduleName + ' from ' + fileName;
+          modules.push(`{fileName: ${fileName}, module: ${moduleName}}`);
+          return `import * as ${moduleName} from ${fileName}`;
 
         } else if (match.match(importFiles)) {
-          return 'import ' + fileName;
+          return `import ${fileName}`;
 
         } else {
-          self.emitWarning('Unknown import: "' + match + '"');
+          self.emitWarning(`Unknown import: "${match}"`);
         }
       })
       .join('; ');
 
     if (result && modules.length) {
-      result += '; var ' + obj + ' = [' + modules.join(', ') + ']';
+      result += `; var ${obj} = [${modules.join(', ')}]`;
     }
 
     if (!result) {
-      self.emitWarning('Empty results for "' + match + '"');
+      self.emitWarning(`Empty results for "${match}"`);
     }
 
     return result;

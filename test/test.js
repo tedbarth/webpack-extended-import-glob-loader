@@ -1,16 +1,16 @@
-var chai       = require('chai')
-  , sinon      = require('sinon')
-  , path       = require('path');
+const chai = require('chai')
+  , sinon = require('sinon')
+  , path = require('path');
 
-var loader     = require('../');
+const loader = require('../');
 
-var expect = chai.expect
+const expect = chai.expect
   , assert = chai.assert;
 
-var context = {};
+let context = {};
 
-describe('loader', function() {
-  this.beforeEach(function() {
+describe('loader', function () {
+  this.beforeEach(() => {
     context = {
       resourcePath: path.resolve(__dirname, 'mock', 'test.js'),
       emitWarning: sinon.stub(),
@@ -18,12 +18,12 @@ describe('loader', function() {
     };
   });
 
-  describe('from files', function() {
+  describe('from files', () => {
 
-    describe('import "*.js"', function() {
-      it('should expand glob import files', function() {
+    describe('import "*.js"', () => {
+      it('should expand glob import files', () => {
         // double quote
-        var generatedCode = loader.call(context, 'import "./modules/*.js";');
+        let generatedCode = loader.call(context, 'import "./modules/*.js";');
         expect(generatedCode).to.equal(
           'import "./modules/a.js"; import "./modules/b.js"; import "./modules/c.js";'
         );
@@ -34,14 +34,14 @@ describe('loader', function() {
         );
 
         // single quote
-        var generatedCode = loader.call(context, 'import \'./modules/*.js\';');
+        generatedCode = loader.call(context, 'import \'./modules/*.js\';');
         expect(generatedCode).to.equal(
           'import \'./modules/a.js\'; import \'./modules/b.js\'; import \'./modules/c.js\';'
         );
       });
 
-      it('should honor comment after expanding glob import files', function() {
-        var generatedCode = loader.call(context, '//import "./modules/*.js";');
+      it('should honor comment after expanding glob import files', () => {
+        let generatedCode = loader.call(context, '//import "./modules/*.js";');
         expect(generatedCode).to.equal(
           '//import "./modules/a.js"; import "./modules/b.js"; import "./modules/c.js";'
         );
@@ -52,31 +52,31 @@ describe('loader', function() {
         );
       });
 
-      it('should emit warning when import nothing', function() {
-        var generatedCode = loader.call(context, 'import "./unknown/*.js";');
+      it('should emit warning when import nothing', () => {
+        const generatedCode = loader.call(context, 'import "./unknown/*.js";');
         assert.equal(context.emitWarning.called, true);
       });
     });
 
-    describe('import modules from "*.js"', function() {
-      it('should expand glob import files', function() {
-        var generatedCode = loader.call(context, 'import modules from "./modules/*.js";');
+    describe('import modules from "*.js"', () => {
+      it('should expand glob import files', () => {
+        const generatedCode = loader.call(context, 'import modules from "./modules/*.js";');
         expect(generatedCode).to.equal(
           'import * as modules0 from "./modules/a.js"; import * as modules1 from "./modules/b.js"; import * as modules2 from "./modules/c.js"; var modules = [{fileName: "./modules/a.js", module: modules0}, {fileName: "./modules/b.js", module: modules1}, {fileName: "./modules/c.js", module: modules2}];'
         );
       });
     });
 
-    describe('import from *.scss', function() {
-      it('should import glob scss files', function() {
-        var generatedCode = loader.call(context, '@import "./modules/*.scss";');
+    describe('import from *.scss', () => {
+      it('should import glob scss files', () => {
+        const generatedCode = loader.call(context, '@import "./modules/*.scss";');
         expect(generatedCode).to.equal(
           '@import "./modules/e.scss"; @import "./modules/f.scss";'
         );
       });
 
-      it('should honor comment after expanding glob import files', function() {
-        var generatedCode = loader.call(context, '//@import "./modules/*.scss";');
+      it('should honor comment after expanding glob import files', () => {
+        let generatedCode = loader.call(context, '//@import "./modules/*.scss";');
         expect(generatedCode).to.equal(
           '//@import "./modules/e.scss"; @import "./modules/f.scss";'
         );
@@ -89,24 +89,24 @@ describe('loader', function() {
     })
   });
 
-  describe('from node_modules', function() {
-    it('should load node_modules files', function() {
-      var generatedCode = loader.call(context, 'import "fake_module/js/*.js";');
+  describe('from node_modules', () => {
+    it('should load node_modules files', () => {
+      const generatedCode = loader.call(context, 'import "fake_module/js/*.js";');
       expect(generatedCode).to.equal(
         'import "fake_module/js/a.js"; import "fake_module/js/b.js"; import "fake_module/js/c.js";'
       );
     });
 
-    it('should honor comment after expanding glob import files', function() {
-      var generatedCode = loader.call(context, '// import "fake_module/js/*.js";');
+    it('should honor comment after expanding glob import files', () => {
+      const generatedCode = loader.call(context, '// import "fake_module/js/*.js";');
       expect(generatedCode).to.equal(
         '// import "fake_module/js/a.js"; import "fake_module/js/b.js"; import "fake_module/js/c.js";'
       );
     });
 
-    it('should emit error when node_modules is not found', function() {
+    it('should emit error when node_modules is not found', () => {
       context.resourcePath = path.resolve('/tmp', 'test.js');
-      var generatedCode = loader.call(context, 'import "unknown/*.js";');
+      const generatedCode = loader.call(context, 'import "unknown/*.js";');
       assert.equal(context.emitError.called, true);
     });
   });

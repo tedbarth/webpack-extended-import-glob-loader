@@ -1,10 +1,10 @@
-var glob = require("glob");
-var path = require("path");
-var fs = require('fs');
+const glob = require("glob");
+const path = require("path");
+const fs = require('fs');
 
-function walkUpToFindNodeModulesPath(context) {
-  var tempPath = path.resolve(context, 'node_modules');
-  var upDirPath = path.resolve(context, '../');
+function walkUpToFindNodeModulesPath (context) {
+  const tempPath = path.resolve(context, 'node_modules');
+  const upDirPath = path.resolve(context, '../');
 
   if (fs.existsSync(tempPath) && fs.lstatSync(tempPath).isDirectory()) {
     return tempPath;
@@ -15,31 +15,30 @@ function walkUpToFindNodeModulesPath(context) {
   }
 }
 
-function isNodeModule(str) {
+function isNodeModule (str) {
   return !str.match(/^\./);
 }
 
-module.exports = function(source) {
+module.exports = function (source) {
   this.cacheable && this.cacheable(true);
 
-  var self = this;
-  var regex = /@?import + ?((\w+) +from )?([\'\"])(.*?);?\3/gm;
-  var importModules = /import +(\w+) +from +([\'\"])(.*?)\2/gm;
-  var importFiles = /import +([\'\"])(.*?)\1/gm;
-  var importSass = /@import +([\'\"])(.*?)\1/gm;
-  var resourceDir = path.dirname(this.resourcePath);
+  const self = this;
+  const regex = /@?import + ?((\w+) +from )?([\'\"])(.*?);?\3/gm;
+  const importModules = /import +(\w+) +from +([\'\"])(.*?)\2/gm;
+  const importFiles = /import +([\'\"])(.*?)\1/gm;
+  const importSass = /@import +([\'\"])(.*?)\1/gm;
+  const resourceDir = path.dirname(this.resourcePath);
 
-  var nodeModulesPath = walkUpToFindNodeModulesPath(resourceDir);
+  const nodeModulesPath = walkUpToFindNodeModulesPath(resourceDir);
 
-  function replacer(match, fromStatement, obj, quote, filename) {
-    var modules = [];
-    var withModules = false;
+  function replacer (match, fromStatement, obj, quote, filename) {
+    const modules = [];
 
     if (!filename.match(/\*/)) return match;
 
-    var globRelativePath = filename.match(/!?([^!]*)$/)[1];
-    var prefix = filename.replace(globRelativePath, '');
-    var cwdPath;
+    const globRelativePath = filename.match(/!?([^!]*)$/)[1];
+    const prefix = filename.replace(globRelativePath, '');
+    let cwdPath;
 
     if (isNodeModule(globRelativePath)) {
       if (!nodeModulesPath) {
@@ -52,20 +51,19 @@ module.exports = function(source) {
       cwdPath = resourceDir;
     }
 
-    var result = glob
+    let result = glob
       .sync(globRelativePath, {
         cwd: cwdPath
       })
       .map((file, index) => {
-        var fileName = quote + prefix + file + quote;
+        const fileName = quote + prefix + file + quote;
 
         if (match.match(importSass)) {
           return '@import ' + fileName;
 
         } else if (match.match(importModules)) {
-          var moduleName = obj + index;
+          const moduleName = obj + index;
           modules.push('{fileName: ' + fileName + ', module: ' + moduleName + '}');
-          withModules = true;
           return 'import * as ' + moduleName + ' from ' + fileName;
 
         } else if (match.match(importFiles)) {
@@ -77,7 +75,7 @@ module.exports = function(source) {
       })
       .join('; ');
 
-    if (result && withModules) {
+    if (result && modules.length) {
       result += '; var ' + obj + ' = [' + modules.join(', ') + ']';
     }
 
@@ -88,6 +86,5 @@ module.exports = function(source) {
     return result;
   }
 
-  var res = source.replace(regex, replacer);
-  return res;
+  return source.replace(regex, replacer);
 };

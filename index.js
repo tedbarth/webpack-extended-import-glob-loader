@@ -76,7 +76,7 @@ module.exports = function (source) {
       .join('; ');
 
     if (result && modules.length) {
-      result += `; var ${obj} = [${modules.join(', ')}]`;
+      result += `; const ${obj} = [${modules.join(', ')}]`;
     }
 
     if (!result) {

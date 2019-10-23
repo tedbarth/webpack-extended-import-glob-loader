@@ -16,7 +16,7 @@ import * as module0 from "./foo/1.js";
 import * as module1 from "./foo/bar/2.js";
 import * as module2 from "./foo/bar/3.js";
 
-var modules = [
+const modules = [
   {fileName: "./foo/1.js", module: module0},
   {fileName: "./foo/bar/2.js", module: module1},
   {fileName: "./foo/bar/3.js", module: module2}];
@@ -32,7 +32,7 @@ import * as module0 from "a-node-module/foo/1.js";
 import * as module1 from "a-node-module/foo/bar/2.js";
 import * as module2 from "a-node-module/foo/bar/3.js";
 
-var modules = [module0, module1, module2]
+const modules = [module0, module1, module2]
 ```
 ---
 __For side effects:__

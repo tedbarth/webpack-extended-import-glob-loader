@@ -1,12 +1,12 @@
 {
   "name": "webpack-import-glob-loader",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "ES6 import with glob patterns (preloader for Webpack)",
   "license": "MIT",
   "main": "index.js",
   "author": {
-    "name": "Fred Jhang",
-    "url": "https://github.com/fred104"
+    "name": "Sebastian Barth",
+    "url": "https://github.com/tedbarth"
   },
   "keywords": [
     "webpack",
@@ -31,6 +31,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fred104/webpack-import-glob-loader"
+    "url": "git+https://github.com/tedbarth/webpack-import-glob-loader"
   }
 }

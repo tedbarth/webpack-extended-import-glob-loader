@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/fred104/webpack-import-glob-loader.svg)](https://travis-ci.org/fred104/webpack-import-glob-loader.svg)
 [![npm version](https://badge.fury.io/js/webpack-import-glob-loader.svg)](https://badge.fury.io/js/webpack-import-glob-loader)
-# webpack-import-glob-loader
+# webpack-extended-import-glob-loader
 ES6 import with glob patterns (preloader for Webpack)
 
 (Forked from https://github.com/fred104/import-glob)
@@ -74,11 +74,11 @@ module.exports = {
     rules: [
       {
           test: /\.js$/,
-          use: 'webpack-import-glob-loader'
+          use: 'webpack-extended-import-glob-loader'
       },
       {
           test: /\.scss$/,
-          use: 'webpack-import-glob-loader'
+          use: 'webpack-extended-import-glob-loader'
       },
     ]
   }
@@ -91,5 +91,5 @@ Alternatively you can use it as a chained loader
 import "./**/*.js";
 
 // index.js
-import 'webpack-import-glob-loader!foo/bar.js';
+import 'webpack-extended-import-glob-loader!foo/bar.js';
 ```

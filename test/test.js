@@ -62,7 +62,7 @@ describe('loader', function() {
       it('should expand glob import files', function() {
         var generatedCode = loader.call(context, 'import modules from "./modules/*.js";');
         expect(generatedCode).to.equal(
-          'import * as modules0 from "./modules/a.js"; import * as modules1 from "./modules/b.js"; import * as modules2 from "./modules/c.js"; var modules = [modules0, modules1, modules2];'
+          'import * as modules0 from "./modules/a.js"; import * as modules1 from "./modules/b.js"; import * as modules2 from "./modules/c.js"; var modules = [{fileName: "./modules/a.js", module: modules0}, {fileName: "./modules/b.js", module: modules1}, {fileName: "./modules/c.js", module: modules2}];'
         );
       });
     });

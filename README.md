@@ -3,7 +3,7 @@
 # webpack-import-glob-loader
 ES6 import with glob patterns (preloader for Webpack)
 
-(Forked from https://github.com/terpiljenya/import-glob)
+(Forked from https://github.com/fred104/import-glob)
 
 Expands globbing patterns for ES6 `import` statements.
 

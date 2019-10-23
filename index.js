@@ -64,7 +64,7 @@ module.exports = function(source) {
 
         } else if (match.match(importModules)) {
           var moduleName = obj + index;
-          modules.push(moduleName);
+          modules.push('{fileName: ' + fileName + ', module: ' + moduleName + '}');
           withModules = true;
           return 'import * as ' + moduleName + ' from ' + fileName;
 

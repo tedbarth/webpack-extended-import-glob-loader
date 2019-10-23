@@ -23,7 +23,7 @@
     "babel-loader": "6.1.0",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "sinon": "^7.2.0",
+    "sinon": "^7.5.0",
     "webpack": "^1.0.0"
   },
   "scripts": {

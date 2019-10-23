@@ -1,11 +1,10 @@
-[![Build Status](https://travis-ci.org/fred104/webpack-import-glob-loader.svg)](https://travis-ci.org/fred104/webpack-import-glob-loader.svg)
-[![npm version](https://badge.fury.io/js/webpack-import-glob-loader.svg)](https://badge.fury.io/js/webpack-import-glob-loader)
+[![Build Status](https://api.travis-ci.org/tedbarth/webpack-extended-import-glob-loader.svg)](https://travis-ci.org/webpack-extended-import-glob-loader)
+[![npm version](https://badge.fury.io/js/webpack-extended-import-glob-loader.svg)](https://badge.fury.io/js/webpack-extended-import-glob-loader.)
 # webpack-extended-import-glob-loader
-ES6 import with glob patterns (preloader for Webpack)
+Expands globbing patterns for ES6 `import` statements (as preloader for Webpack) .
 
-(Forked from https://github.com/fred104/import-glob)
-
-Expands globbing patterns for ES6 `import` statements.
+This is a fork of https://github.com/fred104/import-glob.
+In comparison to the original project this loader is exposing the imported modules together with its file name. This allows to process the individually found module to be handled in respect to its file name. A possible usecase could be to extract a key from the filename as identifier for the content of dynamically imported JSON files.
 
 ---
 ```js

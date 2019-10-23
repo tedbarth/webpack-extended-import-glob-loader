@@ -1,5 +1,5 @@
 {
-  "name": "webpack-import-glob-loader",
+  "name": "webpack-extended-import-glob-loader",
   "version": "1.6.4",
   "description": "ES6 import with glob patterns (preloader for Webpack)",
   "license": "MIT",
